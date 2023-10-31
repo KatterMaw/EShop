@@ -8,6 +8,7 @@ public sealed class AuthenticatedUserConfiguration : IEntityTypeConfiguration<Au
 {
 	public void Configure(EntityTypeBuilder<AuthenticatedUser> builder)
 	{
+		builder.ToTable("AuthenticatedUsers");
 		builder.OwnsOne(user => user.Password,
 			passwordBuilder => 
 			{
