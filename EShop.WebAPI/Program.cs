@@ -7,6 +7,8 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Log.Logger = new LoggerConfiguration()
+	.CreateBootstrapLogger();
 
 builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 {
@@ -22,13 +24,13 @@ builder.Services.AddTransient<GuestAuthenticationMiddleware>();
 builder.Services.AddTransient<UpdateUserLastVisitMiddleware>();
 builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
-builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog());
+builder.Host.UseSerilog((context, services, configuration) =>
+{
+	configuration.ReadFrom.Configuration(context.Configuration);
+	configuration.ReadFrom.Services(services);
+});
 
 var app = builder.Build();
-
-Log.Logger = new LoggerConfiguration()
-	.ReadFrom.Configuration(app.Configuration)
-	.CreateLogger();
 
 using (var scope = app.Services.CreateScope())
 {
