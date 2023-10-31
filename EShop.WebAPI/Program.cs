@@ -37,6 +37,7 @@ using (var scope = app.Services.CreateScope())
 	await scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreatedAsync();
 }
 
+app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseMiddleware<UpdateUserLastVisitMiddleware>();
 app.UseMiddleware<GuestAuthenticationMiddleware>();
