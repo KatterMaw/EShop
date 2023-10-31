@@ -19,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => options.AccessDeniedPath = "/AccessDenied");
 builder.Services.AddTransient<GuestAuthenticationMiddleware>();
+builder.Services.AddTransient<UpdateUserLastVisitMiddleware>();
 builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog());
@@ -35,6 +36,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseAuthentication();
+app.UseMiddleware<UpdateUserLastVisitMiddleware>();
 app.UseMiddleware<GuestAuthenticationMiddleware>();
 app.UseAuthorization();
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}");
