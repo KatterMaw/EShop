@@ -4,9 +4,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Domain.Model", "EShop
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Data", "EShop.Data\EShop.Data.csproj", "{EC6B53CE-5C53-4C70-8C66-DAB0956AAB55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.WebAPI", "EShop.WebAPI\EShop.WebAPI.csproj", "{01FB97ED-EA32-4908-9541-D8CBE5E02CE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01FB97ED-EA32-4908-9541-D8CBE5E02CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01FB97ED-EA32-4908-9541-D8CBE5E02CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01FB97ED-EA32-4908-9541-D8CBE5E02CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01FB97ED-EA32-4908-9541-D8CBE5E02CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B211EE40-5B6E-41AE-A99D-884638358785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B211EE40-5B6E-41AE-A99D-884638358785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B211EE40-5B6E-41AE-A99D-884638358785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B211EE40-5B6E-41AE-A99D-884638358785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC6B53CE-5C53-4C70-8C66-DAB0956AAB55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC6B53CE-5C53-4C70-8C66-DAB0956AAB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC6B53CE-5C53-4C70-8C66-DAB0956AAB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC6B53CE-5C53-4C70-8C66-DAB0956AAB55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
