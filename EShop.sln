@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Domain.Model", "EShop.Domain.Model\EShop.Domain.Model.csproj", "{B211EE40-5B6E-41AE-A99D-884638358785}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Data", "EShop.Data\EShop.Data.csproj", "{EC6B53CE-5C53-4C70-8C66-DAB0956AAB55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
