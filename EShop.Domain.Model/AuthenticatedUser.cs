@@ -11,6 +11,8 @@ public sealed class AuthenticatedUser : User
 		Password = new Password(password);
 	}
 
+	public override string ToString() => $"{Name} ({base.ToString()})";
+
 	private AuthenticatedUser()
 	{
 		Name = null!;

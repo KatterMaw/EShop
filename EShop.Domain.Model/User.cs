@@ -17,4 +17,6 @@ public abstract class User
 	{
 		LastVisit = DateTime.UtcNow;
 	}
+
+	public override string ToString() => $"#{Id}";
 }
