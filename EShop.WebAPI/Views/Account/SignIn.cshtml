@@ -1,0 +1,23 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model string
+<h2>User Name Form</h2>
+<form method="post">
+    <label>Name:</label>
+    <br/>
+    <input type="text" name="Name"/>
+    <br/>
+    <label>Password</label>
+    <br/>
+    <input type="password" name="Password"/>
+    <br/>
+    <input type="submit" value="Log-in"/>
+</form>
+
+@if (!string.IsNullOrEmpty(Model))
+{
+    <label>@Model</label>
+    <br/>
+}
+
+<label>You don't have an account?</label>
+<a asp-controller="Account" asp-action="SignUp" asp-route-returnUrl="@Context.Request.Query["returnUrl"]">Create a new one</a>
