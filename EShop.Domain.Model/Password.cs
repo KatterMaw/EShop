@@ -6,20 +6,20 @@ namespace EShop.Domain.Model;
 
 public sealed class Password
 {
-	private static string CreateSalt(int size)
+	private static string CreateSalt(byte length)
 	{
-		var buffer = new byte[size];
-		Random.Shared.NextBytes(buffer);
-		var saltString = Convert.ToBase64String(buffer);
-		Log.ForContext<Password>().Debug("Generated salt: {Salt}", saltString);
-		return saltString;
+		const string allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		var result = new string(Enumerable.Range(0, length)
+			.Select(_ => allowedCharacters[Random.Shared.Next(allowedCharacters.Length)]).ToArray());
+		Log.ForContext<Password>().Debug("Generated salt: {Salt}", result);
+		return result;
 	}
 	
 	public Password(string password)
 	{
-		Salt = CreateSalt(16);
+		Salt = CreateSalt(4);
 		Hash = Argon2.Hash(password + Salt);
-		Guard.IsTrue(Argon2.Verify(password, Hash));
+		Guard.IsTrue(Verify(password));
 	}
 
 	public string Hash { get; private set; }
