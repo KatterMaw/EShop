@@ -5,7 +5,6 @@ using FlakeId;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
-using ILogger = Serilog.ILogger;
 
 namespace EShop.WebAPI.Middlewares;
 
@@ -29,7 +28,7 @@ public sealed class GuestAuthenticationMiddleware : IMiddleware
 		await next(context);
 	}
 	
-	private readonly ILogger _logger = Log.ForContext<GuestAuthenticationMiddleware>();
+	private readonly Serilog.ILogger _logger = Log.ForContext<GuestAuthenticationMiddleware>();
 	private readonly AppDbContext _dbContext;
 	
 	private static bool IsAuthenticated(HttpContext context)
@@ -41,8 +40,7 @@ public sealed class GuestAuthenticationMiddleware : IMiddleware
 	{
 		ClaimsIdentity claimsIdentity = new(new Claim[]
 		{
-			new(ClaimTypes.Anonymous, id.ToString()),
-			new(ClaimTypes.Role, Roles.Guest)
+			new("Id", id.ToString())
 		}, CookieAuthenticationDefaults.AuthenticationScheme);
 		context.User.AddIdentity(claimsIdentity);
 		await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));

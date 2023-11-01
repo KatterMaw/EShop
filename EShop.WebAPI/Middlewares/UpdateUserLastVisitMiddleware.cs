@@ -2,9 +2,7 @@
 using EShop.Data;
 using EShop.Domain.Model;
 using FlakeId;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
-using ILogger = Serilog.ILogger;
 
 namespace EShop.WebAPI.Middlewares;
 
@@ -31,8 +29,8 @@ public sealed class UpdateUserLastVisitMiddleware : IMiddleware
 		await next(context);
 	}
 	
+	private readonly Serilog.ILogger _logger = Log.ForContext<UpdateUserLastVisitMiddleware>();
 	private readonly AppDbContext _dbContext;
-	private readonly ILogger _logger = Log.ForContext<UpdateUserLastVisitMiddleware>();
 
 	private static bool IsAuthenticated(HttpContext context)
 	{
@@ -41,18 +39,16 @@ public sealed class UpdateUserLastVisitMiddleware : IMiddleware
 
 	private async Task<User?> GetUser(HttpContext context)
 	{
-		var idClaim = context.User.FindFirstValue(ClaimTypes.Anonymous);
+		var idClaim = context.User.FindFirstValue("Id");
 		if (idClaim != null)
 		{
 			var id = new Id(long.Parse(idClaim));
-			return await _dbContext.GuestUsers.FirstAsync(user => user.Id == id);
+			var user = await _dbContext.Users.FindAsync(id);
+			if (user == null)
+				_logger.Warning("User with id {Id} not found", id);
+			return user;
 		}
-		idClaim = context.User.FindFirstValue("Id");
-		if (idClaim != null)
-		{
-			var id = new Id(long.Parse(idClaim));
-			return await _dbContext.AuthenticatedUsers.FirstAsync(user => user.Id == id);
-		}
+		_logger.Warning("User id (claim) not found");
 		return null;
 	}
 }
