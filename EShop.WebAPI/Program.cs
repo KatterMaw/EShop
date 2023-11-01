@@ -22,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => options.AccessDeniedPath = "/AccessDenied");
 builder.Services.AddTransient<GuestAuthenticationMiddleware>();
 builder.Services.AddTransient<UpdateUserLastVisitMiddleware>();
+builder.Services.AddTransient<AssignUserRoleMiddleware>();
 builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 builder.Host.UseSerilog((context, services, configuration) =>
@@ -41,6 +42,7 @@ app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseMiddleware<UpdateUserLastVisitMiddleware>();
 app.UseMiddleware<GuestAuthenticationMiddleware>();
+app.UseMiddleware<AssignUserRoleMiddleware>();
 app.UseAuthorization();
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}");
 
