@@ -1,5 +1,6 @@
 using EShop.Application;
 using EShop.Data;
+using EShop.Services;
 using EShop.Services.UsersProviders;
 using EShop.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -26,6 +27,7 @@ builder.Services.AddTransient<GuestAuthenticationMiddleware>();
 builder.Services.AddTransient<UpdateUserLastVisitMiddleware>();
 builder.Services.AddTransient<AssignUserRoleMiddleware>();
 builder.Services.AddScoped<UsersProvider, IdCachedDbUsersProvider>();
+builder.Services.AddScoped<UserLastVisitUpdater, DbUserLastVisitUpdater>();
 builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 builder.Host.UseSerilog((context, services, configuration) =>
