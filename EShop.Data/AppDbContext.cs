@@ -9,7 +9,8 @@ public sealed class AppDbContext : DbContext
 	public DbSet<User> Users { get; set; } = null!;
 	public DbSet<GuestUser> GuestUsers { get; set; } = null!;
 	public DbSet<AuthenticatedUser> AuthenticatedUsers { get; set; } = null!;
-	
+	public DbSet<Administrator> Administrators { get; set; } = null!;
+
 	public AppDbContext(DbContextOptions options) : base(options)
 	{
 	}
@@ -18,5 +19,6 @@ public sealed class AppDbContext : DbContext
 	{
 		modelBuilder.ApplyConfiguration(new UserConfiguration());
 		modelBuilder.ApplyConfiguration(new AuthenticatedUserConfiguration());
+		modelBuilder.ApplyConfiguration(new AdministratorConfiguration());
 	}
 }

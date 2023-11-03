@@ -40,7 +40,9 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-	await scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreatedAsync();
+	var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+	await dbContext.Database.EnsureCreatedAsync();
+	await dbContext.SeedData();
 }
 
 app.UseSerilogRequestLogging();
