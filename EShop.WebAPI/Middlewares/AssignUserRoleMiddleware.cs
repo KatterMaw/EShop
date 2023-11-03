@@ -1,24 +1,21 @@
 ﻿using System.Security.Claims;
 using CommunityToolkit.Diagnostics;
-using EShop.Data;
+using EShop.Application;
 using EShop.Domain.Model;
-using FlakeId;
-using Serilog;
+using EShop.WebAPI.Extensions;
 
 namespace EShop.WebAPI.Middlewares;
 
 public sealed class AssignUserRoleMiddleware : IMiddleware
 {
-	public AssignUserRoleMiddleware(AppDbContext dbContext)
+	public AssignUserRoleMiddleware(UsersProvider usersProvider)
 	{
-		_dbContext = dbContext;
+		_usersProvider = usersProvider;
 	}
 	
 	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 	{
-		var user = await GetUser(context);
-		if (user == null)
-			return;
+		var user = await _usersProvider.GetHttpContextUser(context);
 		var role = user switch
 		{
 			GuestUser => Roles.Guest,
@@ -29,21 +26,5 @@ public sealed class AssignUserRoleMiddleware : IMiddleware
 		await next(context);
 	}
 	
-	private readonly Serilog.ILogger _logger = Log.ForContext<AssignUserRoleMiddleware>();
-	private readonly AppDbContext _dbContext;
-	
-	private async Task<User?> GetUser(HttpContext context)
-	{
-		var idClaim = context.User.FindFirstValue("Id");
-		if (idClaim != null)
-		{
-			var id = new Id(long.Parse(idClaim));
-			var user = await _dbContext.Users.FindAsync(id);
-			if (user == null)
-				_logger.Warning("User with id {Id} not found", id);
-			return user;
-		}
-		_logger.Warning("User id (claim) not found");
-		return null;
-	}
+	private readonly UsersProvider _usersProvider;
 }

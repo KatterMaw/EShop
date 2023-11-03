@@ -16,8 +16,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\EShop.Application\EShop.Application.csproj" />
       <ProjectReference Include="..\EShop.Data\EShop.Data.csproj" />
       <ProjectReference Include="..\EShop.Domain.Model\EShop.Domain.Model.csproj" />
+      <ProjectReference Include="..\EShop.Services\EShop.Services.csproj" />
     </ItemGroup>
 
 </Project>
